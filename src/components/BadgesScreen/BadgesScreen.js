@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ActivityIndicator, StyleSheet, FlatList, Text} from 'react-native'
+import {View, ActivityIndicator, StyleSheet, FlatList, Text, Alert,} from 'react-native'
 import BadgesItem from './BadgesItem';
 import Colors from '../../res/Colors'
 import Http from '../../libs/http'
@@ -25,6 +25,14 @@ class BadgesScreen extends React.Component {
         this.props.navigation.navigate('BadgesDetail', {item});
     };
 
+    handleEdit = item => {
+        
+    }
+
+    handleDelete = item => {
+        Alert.alert('Are you sure?');
+    }
+
     render() {
         const {badges, loading} = this.state;
         
@@ -44,7 +52,11 @@ class BadgesScreen extends React.Component {
                     <BadgesItem 
                     key={item._id} 
                     item={item}
-                    onPress={() => this.handlePress(item)} />}
+                    onPress={() => this.handlePress(item)}
+                    onEdit={() => this.handleEdit(item)}
+                    onDelete={() => this.handleDelete(item)}
+                    />}
+                keyExtractor={(item, index) => index.toString()}
                 />
             </View>
         );
