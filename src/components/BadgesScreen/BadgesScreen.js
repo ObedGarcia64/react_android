@@ -26,11 +26,12 @@ class BadgesScreen extends React.Component {
     };
 
     handleEdit = item => {
-        
+
     }
 
     handleDelete = item => {
-        Alert.alert('Are you sure?');
+        Alert.alert('Are you sure?',
+        `Do you really want to delete ${item.name}'s badge?\n\nThis process cannot be undone`);
     }
 
     render() {
