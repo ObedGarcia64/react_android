@@ -1,8 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import BadgeLanding from '../BadgesLanding/BadgeLanding'
-import Colors from '../../res/Colors'
 import BadgesScreen from './BadgesScreen'
+import BadgesDetail from '../BadgesDetail/BadgesDetail'
+import Colors from '../../res/Colors'
 
 const Stack = createStackNavigator()
 
@@ -22,6 +23,7 @@ const BadgesStack = () =>{
             options={{ headerShown: false}} 
             />
             <Stack.Screen name="Badges" component={BadgesScreen} />
+            <Stack.Screen name="BadgesDetail" component={BadgesDetail} />
         </Stack.Navigator>
     );
 }
