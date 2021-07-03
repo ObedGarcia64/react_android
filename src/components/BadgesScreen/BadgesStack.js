@@ -4,8 +4,9 @@ import BadgeLanding from '../BadgesLanding/BadgeLanding'
 import BadgesScreen from './BadgesScreen'
 import BadgesDetail from '../BadgesDetail/BadgesDetail'
 import Colors from '../../res/Colors'
+import BadgesEdit from '../BadgesEdit/BadgesEdit'
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 const BadgesStack = () =>{
     return(
@@ -24,6 +25,7 @@ const BadgesStack = () =>{
             />
             <Stack.Screen name="Badges" component={BadgesScreen} />
             <Stack.Screen name="BadgesDetail" component={BadgesDetail} />
+            <Stack.Screen name="BadgesEdit" component={BadgesEdit} />
         </Stack.Navigator>
     );
 }
