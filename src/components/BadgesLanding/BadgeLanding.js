@@ -16,7 +16,10 @@ const imageBackground = {
 class BadgeLanding extends React.Component{
 
     handlePress = () =>{
-        this.props.navigation.replace('Badges');
+        this.props.navigation.replace('BadgeSignin');
+    };
+    handlePresss = () =>{
+        this.props.navigation.replace('BadgeRegister');
     };
 
     render(){
@@ -29,7 +32,10 @@ class BadgeLanding extends React.Component{
                         Welcome {'\n'} to my {'\n'} App
                     </Text>
                     <TouchableOpacity style={styles.button} onPress={this.handlePress}>
-                        <Text style={styles.buttonText}>Wellcome</Text>
+                        <Text style={styles.buttonText}>LogIn</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={this.handlePresss}>
+                        <Text style={styles.buttonText}>Register</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
