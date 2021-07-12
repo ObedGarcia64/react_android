@@ -22,14 +22,15 @@ class BadgesDetail extends React.Component{
     };
 
     getFavorite = async () => {
-        try {
+        try{
             const key = `favorite-${this.state.badge._id}`;
             const favoriteStr = await Storage.instance.get(key);
-            if(favorite!=null){
-                this.setState({isFavorite:true})
+            if(favoriteStr!=null){
+                this.setState({isFavorite: true});
             }
         }catch(err){
-            console.log('Get favorite err', err)
+            console.log('Get favorite error', err);
+
         }
     }
 
