@@ -27,7 +27,7 @@ class BadgeSignin extends React.Component{
 
 
     handlePress = () => {
-        this.props.navigation.navigate('Badges');
+        this.props.navigation.navigate('BadgesTabNavigator');
     };
 
 

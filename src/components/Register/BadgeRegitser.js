@@ -48,24 +48,23 @@ class BadgeRegister extends React.Component{
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Email'}/>
-
                                             <Text style={styles.inputText}>Username</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Username'}
-                                                secureTextEntry={true}/>
+                                                />
                                                 <Text style={styles.inputText}>Password</Text>
                                             <TextInput 
                                                 style={styles.input} 
-                                                placeholder={'Password'}/>
-
+                                                placeholder={'Password'}
+                                                secureTextEntry={true}/>
                                             <Text style={styles.inputText}>Confirm Password</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Confirm Password'}
                                                 secureTextEntry={true}/>                                            
                                             <TouchableOpacity style={styles.button} onPress={this.handlePress}>
-                                                <Text style={styles.buttonText}>LogIn</Text>
+                                                <Text style={styles.buttonText}>SignIn</Text>
                                             </TouchableOpacity>
 
                                         </View>
