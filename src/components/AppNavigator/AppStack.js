@@ -22,7 +22,7 @@ const AppStack = () => {
             }}
         >
             <Stack.Screen 
-            name="Landing" 
+            name="BadgeLanding" 
             component={BadgeLanding} 
             options={{headerShown: false}} />
             <Stack.Screen 

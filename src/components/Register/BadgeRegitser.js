@@ -13,8 +13,9 @@ import {
     Pressable,
     Linking
 } from 'react-native';
-
 import Colors from '../../res/Colors';
+import UserSession from '../../libs/sessions.js';
+import Loader from '../Generic/Loader';
 
 
 
@@ -24,19 +25,66 @@ const imageBackground = {
 };
 
 class BadgeRegister extends React.Component{
-
-
-    handlePress = () => {
-        this.props.navigation.navigate('BadgeSignin');
+    state = {
+        loading: false,
+        errors: [],
+        user: undefined,
+        isPasswordVisible: true,
+        isPasswordConfirmationVisible: true,
+        form: {},
     };
+
+    handlePress = async () => {
+        try{
+            this.setState({loading:true, user:undefined})
+            let response = await UserSession.instance.signup(this.state.form)
+            if (typeof response === 'object'){
+                let errors = []
+                let cont = 0
+                
+                for(let error in response) {
+                    let key = error
+                    if(error === 'non_field_errors'){
+                    error = 'password'
+                    }
+                    errors.push(
+                    <View key={cont}>
+                        <Text style={styles.warningText}>
+                        {`${error} : ${response[key][0]}`}
+                        </Text>
+                    </View>
+                    )
+                    cont++
+                }
+                this.setState({loading:false, user:undefined, errors: errors, error:true})
+            } else {
+                this.setState({loading:false, error: false, user:response, errors:[]})
+                }
+        } catch (error) {
+            console.log('Signup error', error)
+            throw Error(error)
+        }
+        if(this.state.user){
+            this.props.navigation.navigate('BadgeSignin')
+        }
+    };
+
+
+    
 
 
 
     render(){
+        const {loading, errors} = this.state;
+        
+        if (loading === true){
+        return <Loader />;
+        }
         return(
             <KeyboardAvoidingView
                 style={styles.containerKey}>
                     <ImageBackground source={{uri: 'https://scontent.fcuu2-1.fna.fbcdn.net/v/t1.6435-9/131136767_175649497599774_3131271098921890892_n.jpg?_nc_cat=110&_nc_rgb565=1&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=YLFweBc0zGQAX9ZasQn&_nc_ht=scontent.fcuu2-1.fna&oh=d47aabea34b4ea5c88dd2b7df00378ac&oe=60E1BA68'}} style={styles.image}>
+                    <View style={styles.errorContainer}>{errors}</View>
                         <View style={styles.layerColor}>
 
                             <ScrollView style={styles.container}>
@@ -47,22 +95,52 @@ class BadgeRegister extends React.Component{
                                             <Text style={styles.inputText}>Email</Text>
                                             <TextInput 
                                                 style={styles.input} 
-                                                placeholder={'Email'}/>
+                                                placeholder={'Email'}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.email = text;
+                                                        return {form};
+                                                    });
+                                                }}/>
                                             <Text style={styles.inputText}>Username</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Username'}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.username = text;
+                                                        return {form};
+                                                    });
+                                                }}
                                                 />
                                                 <Text style={styles.inputText}>Password</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Password'}
-                                                secureTextEntry={true}/>
+                                                secureTextEntry={true}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.password = text;
+                                                        return {form};
+                                                    });
+                                                }}
+                                                />
                                             <Text style={styles.inputText}>Confirm Password</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Confirm Password'}
-                                                secureTextEntry={true}/>                                            
+                                                secureTextEntry={true}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.password_confirmation = text;
+                                                        return {form};
+                                                    });
+                                                }}
+                                                />                                            
                                             <TouchableOpacity style={styles.button} onPress={this.handlePress}>
                                                 <Text style={styles.buttonText}>SignIn</Text>
                                             </TouchableOpacity>
@@ -179,7 +257,13 @@ const styles = StyleSheet.create({
         width:50,
         resizeMode: 'cover',
         alignItems: 'flex-end'
-    }
+    },
+    errorContainer: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        backgroundColor: '#FF353C90',
+        borderRadius: 5,
+    },
 
     
 });

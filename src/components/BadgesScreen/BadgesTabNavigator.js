@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import BadgesStack from './BadgesStack'
 import Colors from '../../res/Colors'
 import FavoriteStack from '../Favorites/FavoritesStack'
+import Profile from '../UserScreen/Profile'
 
 const Tabs = createMaterialTopTabNavigator();
 
@@ -20,6 +21,15 @@ const BadgesTabNavigator = () =>{
                     paddingTop:30,
                 },
             }}>
+            <Tabs.Screen 
+                name='Profile'
+                component={Profile}
+                options={{
+                    tabBarIcon: ({size, color}) => (
+                        <Image 
+                            style={{tintColor: color, width: size, height: size}}
+                            source={require('../../assets/profile.png')}/>
+                    )}}/>
             <Tabs.Screen 
             name='Badges'
             component={BadgesStack}

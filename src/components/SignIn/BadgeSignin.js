@@ -13,9 +13,9 @@ import {
     Pressable,
     Linking
 } from 'react-native';
-
+import Loader from '../Generic/Loader';
 import Colors from '../../res/Colors';
-
+import UserSession from '../../libs/sessions';
 
 
 
@@ -31,8 +31,51 @@ class BadgeSignin extends React.Component{
     };
 
 
+    state = {
+        loading: false,
+        error: null,
+        user: undefined,
+        isPasswordVisible: true,
+        form: {},
+    };
 
+    componentDidMount = () => {
+        this.deleteTokens();
+      };
+    
+    deleteTokens = async () => {
+        await UserSession.instance.logout();
+      };
+
+    handleSubmit = async () => {
+        try {
+            this.setState({loading:true, error:null, user:undefined})
+            let response = await UserSession.instance.login(this.state.form)
+      
+            if (typeof response === 'object'){
+              console.log(response)
+              if (response["Login Error"]){
+                var message = "Account is not verified."
+              } else {
+                var message = "Invalid credentials. Try again."
+              }
+              this.setState({loading:false, error: message, user: undefined})
+            }else {
+              this.setState({loading:false, error: null, user:response})
+            }
+          } catch (err) {
+              this.setState({loading:false, error:err})
+              console.log(err)
+          }
+          if(this.state.user){
+            this.props.navigation.replace('BadgesTabNavigator')
+          }
+    };
     render(){
+        const {loading, error} = this.state;
+        if (loading === true) {
+            return <Loader />;
+            }
         return(
             <KeyboardAvoidingView
                 style={styles.containerKey}>
@@ -43,18 +86,40 @@ class BadgeSignin extends React.Component{
                                     <View style={styles.content}>
                                         <Image style={styles.logo} source={{uri:'http://assets.stickpng.com/images/5ede4a3fb760540004f2c5e9.png'}}/>
                                         <View style={styles.form}>
-                                            
+                                            {error ? (
+                                                <View style={styles.errorContainer}>
+                                                    <Text style={styles.errorMsg}>
+                                                        {'Invalid Username or password. Please try again.'}
+                                                    </Text>
+                                                </View>
+                                            ) : null}
                                             <Text style={styles.inputText}>Username</Text>
                                             <TextInput 
                                                 style={styles.input} 
-                                                placeholder={'Username'}/>
+                                                placeholder={'Username'}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.username = text;
+                                                        return {form};
+                                                    });
+                                                }}    
+                                            />
 
                                             <Text style={styles.inputText}>Password</Text>
                                             <TextInput 
                                                 style={styles.input} 
                                                 placeholder={'Password'}
-                                                secureTextEntry={true}/>                                          
-                                            <TouchableOpacity style={styles.button} onPress={this.handlePress}>
+                                                secureTextEntry={true}
+                                                onChangeText={text => {
+                                                    this.setState(prevState => {
+                                                        let form = Object.assign({}, prevState.form);
+                                                        form.password = text;
+                                                        return {form};
+                                                    });
+                                                }}    
+                                            />                                          
+                                            <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
                                                 <Text style={styles.buttonText}>LogIn</Text>
                                             </TouchableOpacity>
 
@@ -170,7 +235,17 @@ const styles = StyleSheet.create({
         width:50,
         resizeMode: 'cover',
         alignItems: 'flex-end'
-    }
+    },
+    errorMsg: {
+        color: '#990009',
+    },
+    
+    errorContainer: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        backgroundColor: '#FF353C40',
+        borderRadius: 5,
+    },
 
     
 });
