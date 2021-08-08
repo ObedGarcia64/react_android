@@ -47,30 +47,27 @@ class BadgeSignin extends React.Component{
         await UserSession.instance.logout();
       };
 
-    handleSubmit = async () => {
+      handleSubmit = async () => {
         try {
-            this.setState({loading:true, error:null, user:undefined})
-            let response = await UserSession.instance.login(this.state.form)
-      
-            if (typeof response === 'object'){
-              console.log(response)
-              if (response["Login Error"]){
-                var message = "Account is not verified."
-              } else {
-                var message = "Invalid credentials. Try again."
-              }
-              this.setState({loading:false, error: message, user: undefined})
-            }else {
-              this.setState({loading:false, error: null, user:response})
+          this.setState({ loading: true, error: null, user: undefined })
+          let response = await UserSession.instance.login(this.state.form)
+          if (typeof response === 'object') {
+            if (response['405']) {
+              var message = "Account is not verified"
+            } else {
+              var message = "Invalid Username or password. Please try again"
             }
-          } catch (err) {
-              this.setState({loading:false, error:err})
-              console.log(err)
+            this.setState({ loading: false, error: message, user: undefined })
+          } else {
+            this.setState({ loading: false, error: null, user: response })
           }
-          if(this.state.user){
-            this.props.navigation.replace('BadgesTabNavigator')
-          }
-    };
+        } catch (err) {
+          this.setState({ loading: false, error: err })
+        }
+        if (this.state.user) {
+          this.props.navigation.replace('BadgesTabNavigator')
+        }
+      }
     render(){
         const {loading, error} = this.state;
         if (loading === true) {
