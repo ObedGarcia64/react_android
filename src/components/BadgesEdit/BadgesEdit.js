@@ -24,13 +24,13 @@ class BadgesEdit extends react.Component{
     componentDidMount(){
         this.getBadge();
     }
-
+//Get information from the badge
     getBadge = () => {
         const {item} = this.props.route.params;
         this.setState({badge: item});
         this.props.navigation.setOptions({title: `Edit ${item.name}`});
     };
-
+//Here we can submit the changes on a badge
     handleSubmit = async () => {
         await Http.instance.put(
             this.state.badge._id, 

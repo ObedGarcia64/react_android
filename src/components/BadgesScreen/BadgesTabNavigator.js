@@ -8,7 +8,7 @@ import FavoriteStack from '../Favorites/FavoritesStack'
 import Profile from '../UserScreen/Profile'
 
 const Tabs = createMaterialTopTabNavigator();
-
+//here are the badges screens
 const BadgesTabNavigator = () =>{
     return(
         <Tabs.Navigator

@@ -12,7 +12,7 @@ class BadgesDetail extends React.Component{
     componentDidMount (){
         this.getBadge();
     }
-
+    //Here we get the badges
     getBadge = () => {
         const {item} = this.props.route.params;
         this.setState({badge: item}, () => {
@@ -20,7 +20,7 @@ class BadgesDetail extends React.Component{
         });
         this.props.navigation.setOptions({title: item.name})
     };
-
+    //This function shows the favorite badges
     getFavorite = async () => {
         try{
             const key = `favorite-${this.state.badge._id}`;
@@ -33,7 +33,7 @@ class BadgesDetail extends React.Component{
 
         }
     }
-
+    //This function toogle if a badge is favorite or not
     toogleFavorite = () => {
         if (this.state.isFavorite) {
             this.removeFavorite();
@@ -41,7 +41,7 @@ class BadgesDetail extends React.Component{
             this.addFavorite();
         }
     }
-
+    //Here is where we can add a favorite badge
     addFavorite = async () =>{
         const badge = JSON.stringify(this.state.badge);
         const key = `favorite-${this.state.badge._id}`;
@@ -52,14 +52,14 @@ class BadgesDetail extends React.Component{
             this.setState({isFavorite: true});
         }
     }
+//Here is where we can remove a favorite badge
 
     removeFavorite = async () => {
         const key = `favorite-${this.state.badge._id}`;
         await Storage.instance.remove(key);
         this.setState({isFavorite: false});
     }
-
-
+//This is the screen
     render(){
         const {badge, isFavorite} = this.state;
         return(

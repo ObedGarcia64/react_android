@@ -83,6 +83,7 @@ class BadgeSignin extends React.Component{
                                     <View style={styles.content}>
                                         <Image style={styles.logo} source={{uri:'http://assets.stickpng.com/images/5ede4a3fb760540004f2c5e9.png'}}/>
                                         <View style={styles.form}>
+                                            {/* IF login is incorrect : */}
                                             {error ? (
                                                 <View style={styles.errorContainer}>
                                                     <Text style={styles.errorMsg}>

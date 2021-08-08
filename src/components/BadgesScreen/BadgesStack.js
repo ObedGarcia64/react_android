@@ -9,7 +9,7 @@ import Colors from '../../res/Colors'
 import BadgesEdit from '../BadgesEdit/BadgesEdit'
 
 const Stack = createStackNavigator();
-
+//Here are the structure of the screens
 const BadgesStack = () =>{
     return(
         <Stack.Navigator

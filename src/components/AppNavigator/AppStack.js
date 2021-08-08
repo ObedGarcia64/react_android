@@ -21,6 +21,7 @@ const AppStack = () => {
                 headerTintColor:Colors.white,
             }}
         >
+            {/*Here are the screens that whe use*/}            
             <Stack.Screen 
             name="BadgeLanding" 
             component={BadgeLanding} 

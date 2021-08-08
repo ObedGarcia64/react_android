@@ -34,21 +34,21 @@ class BadgesScreen extends React.Component {
     setFetchInterval = () =>{
         this.interval = setInterval(this.fetchdata,3000);
     };
-
+//Gets information to display badges
     fetchdata = async () => {
         this.setState({loading: true});
         let response = await Http.instance.get_all();
         this.setState({loading: false, badges: response, badgesCopy: response});
     };
-
+//If press we can go to the information badge
     handlePress = item =>{
         this.props.navigation.navigate('BadgesDetail', {item});
     };
-
+//Edit the badges
     handleEdit = item => {
         this.props.navigation.navigate('BadgesEdit', {item});
     }
-
+//Update if the badge has changes
     handleChange = query => {
         const {badgesCopy} = this.state;
 
@@ -64,7 +64,7 @@ class BadgesScreen extends React.Component {
             this.setFetchInterval();
         }
     };
-
+//It shows an alert to see if we want to delete them
     handleDelete = item => {
         Alert.alert('Are you sure?',
         `Do you really want to delete ${item.name}'s badge?\n\nThis process cannot be undone`,

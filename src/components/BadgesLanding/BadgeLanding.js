@@ -14,10 +14,11 @@ const imageBackground = {
 };
 
 class BadgeLanding extends React.Component{
-
+//Here we can go to the BadgesSignIn Screen
     handlePress = () =>{
         this.props.navigation.replace('BadgeSignin');
     };
+//Here we can go to the BadgesRegister screen
     handlePresss = () =>{
         this.props.navigation.replace('BadgeRegister');
     };
