@@ -44,4 +44,6 @@ npm run android
 npm run ios
 ```
 
+# Explanation
+
 Here is a youtube video where you can see how the application works [React native app explication](https://youtu.be/8ufW472DIZE).
